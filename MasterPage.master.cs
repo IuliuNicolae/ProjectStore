@@ -8,8 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
-    MySql.Data.MySqlClient.MySqlConnection conn;
-    MySql.Data.MySqlClient.MySqlCommand cmd;
+   
     MySql.Data.MySqlClient.MySqlDataReader reader;
     string queryStr;
     string id;
@@ -45,12 +44,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
             {
                 name = "You are not logged in as customer or admin!";
             }
-            else if ((actualCustomer == null) && (actualAdmin != null))
+            else if (actualCustomer == null && actualAdmin != null)
             {
                 name = actualAdmin.Name;
                 logBtn.Text = "Log out";
             }
-            else if ((actualCustomer != null) && (actualAdmin == null)) {
+            else if (actualCustomer != null && actualAdmin == null) {
                 name = actualCustomer.FirstName;
                 logBtn.Text = "Log out";
             }
@@ -128,44 +127,41 @@ public partial class MasterPage : System.Web.UI.MasterPage
     }
     protected void logIn() {
         email = textBoxEmail.Text;
+        pass = textBoxPassword.Text;
+        string loginemail ="";
+        string loginpass ="";
         if (email != " ")
         {
             try
             {
-                String connString = System.Configuration.ConfigurationManager.ConnectionStrings["WebbAppConnString"].ToString();
-                conn = new MySql.Data.MySqlClient.MySqlConnection(connString);
-                conn.Open();
-                queryStr = "";
-                queryStr = "SELECT * from customers where customerEmail= '" + email + "'";
-                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-                reader = cmd.ExecuteReader();
+                dbConnection dbc = dbConnection.Instance();
+                queryStr = "SELECT * from user where email = '" + email + "'";
+
+                reader = dbc.Select(queryStr);
+                System.Diagnostics.Debug.WriteLine("read reader");
                 while (reader.Read())
                 {
-                    id = reader.GetInt32(reader.GetOrdinal("customerId")) + "";
-
-                    name = reader.GetString(reader.GetOrdinal("customerName"));
-                    pass = reader.GetString(reader.GetOrdinal("customerPass"));
-
-                    street = reader.GetString(reader.GetOrdinal("custommerStreet"));
-                    phone = reader.GetString(reader.GetOrdinal("customerPhone"));
-
+                    System.Diagnostics.Debug.WriteLine("reads");
+                    loginemail = reader.GetString(reader.GetOrdinal("email"));
+                    loginpass = reader.GetString(reader.GetOrdinal("password"));
+                    System.Diagnostics.Debug.WriteLine(loginemail);
                 }
-               
-                if (!pass.Equals("#£#£0*") && pass.Equals(textBoxPassword.Text))
+                dbc.close();
+                if (loginemail.Equals(email) && loginpass.Equals(pass))
                 {
-                    labelName.Text = name;
-                    Customers myCustomer = new Customers(id, name, pass, email, street, phone);
+                    
+                    Customers myCustomer = new Customers("Johan", "Nilsson", loginemail, loginpass, "gatan1", "01010101");
                     Session["myCustomer"] = myCustomer;
+                    labelName.Text = myCustomer.FirstName;
 
                 }
                 else
                 {
 
-                    labelName.Text = "Invalid pass";
+                    labelName.Text = "Invalid email or password";
                     Response.Redirect("Default.aspx");
 
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
@@ -189,13 +185,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             try
             {
-                String connString = System.Configuration.ConfigurationManager.ConnectionStrings["WebbAppConnString"].ToString();
-                conn = new MySql.Data.MySqlClient.MySqlConnection(connString);
-                conn.Open();
-                queryStr = "";
+                dbConnection dbc = dbConnection.Instance();
                 queryStr = "SELECT * from  administrator where administratorEmail= '" + email + "'";
-                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-                reader = cmd.ExecuteReader();
+
+                reader = dbc.Select(queryStr);
                 while (reader.Read())
                 {
                     id = reader.GetInt32(reader.GetOrdinal("administratorId")) + "";

@@ -7,7 +7,6 @@ using System.Collections;
 
 public partial class BookPage : System.Web.UI.Page
 {
-    MySqlConnection conn;
 
     String queryStr;
     protected void Page_Load(object sender, EventArgs e)
