@@ -1,0 +1,136 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="title" runat="server">
+        </asp:ContentPlaceHolder>
+    </title>
+    <link href="Styles/StyleSheet.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        
+        <div class="wraper">
+           
+            <div class="menu">
+               
+                <asp:Image ID="Image1" runat="server" Height="101px" Width="119px"
+                 AlternateText="Image text" ImageAlign="left" ImageUrl="Styles/oldBook.gif"/>
+               
+             &nbsp;
+                
+                
+                <asp:Label ID="Label1" runat="server" Text="Old books-old friends"></asp:Label>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             
+                <asp:Label ID="Label2" runat="server" Text="Welcome"></asp:Label>
+                &nbsp;&nbsp;
+                <asp:Label ID="labelName" runat="server" Text="MY Name"></asp:Label>
+               &nbsp;
+                <asp:TextBox ID="textBoxEmail" runat="server" OnTextChanged="TextBox1_TextChanged">Email</asp:TextBox>
+                &nbsp;
+                <asp:TextBox ID="textBoxPassword" runat="server" TextMode="Password">Password</asp:TextBox>
+                &nbsp;
+                <asp:Button ID="logBtn" runat="server" Text="Log in" OnClick="Button8_Click1" />
+               
+                <asp:LinkButton ID="LinkButton1" runat="server" ForeColor="Red" OnClick="LinkButton1_Click">CreateAccount</asp:LinkButton>
+               
+             &nbsp;&nbsp;&nbsp;
+                <br />
+&nbsp;<asp:CheckBox ID="checkBoxAdmin" runat="server" Text="Log in as admin" />
+               
+             <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Label ID="Label4" runat="server" Text="Items in cart"></asp:Label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                <asp:DropDownList ID="ddLstBks" runat="server" Height="16px" style="margin-left: 0px" Width="213px" OnSelectedIndexChanged="ddLstBks_SelectedIndexChanged">
+                </asp:DropDownList>
+               
+             
+                &nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                <asp:Button ID="deleteButton" runat="server" Text="Delete" OnClick="Button9_Click" />
+               <br />
+             
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+                
+                <asp:Label ID="Label5" runat="server" Text="Total price"></asp:Label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="labelPrice" runat="server" Text="0"></asp:Label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
+             
+      
+                
+            </div>
+            
+        
+                <div class="sidebarLeft">
+                 <asp:ContentPlaceHolder ID="ContentPlaceHolderLeft" runat="server">
+                </asp:ContentPlaceHolder>
+                    <br />
+&nbsp;<asp:LinkButton ID="linkHome" runat="server" OnClick="linkHome_Click">Home</asp:LinkButton>
+                    <br />
+                    <asp:LinkButton ID="linkBooks" runat="server" OnClick="linkBooks_Click">All Books</asp:LinkButton>
+                    <br />
+                    Category:<br />
+&nbsp;-
+                    <asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click">Science</asp:LinkButton>
+                    <br />
+&nbsp;-
+                    <asp:LinkButton ID="LinkButton4" runat="server" OnClick="LinkButton4_Click">Romance</asp:LinkButton>
+                    <br />
+&nbsp;-
+                    <asp:LinkButton ID="LinkButton5" runat="server" OnClick="LinkButton5_Click">Thriller</asp:LinkButton>
+                    <br />
+&nbsp;-
+                    <asp:LinkButton ID="LinkButton6" runat="server" OnClick="LinkButton6_Click">Children</asp:LinkButton>
+                    <br />
+&nbsp;<asp:LinkButton ID="linkAdministrator" runat="server" OnClick="linkAdministrator_Click">Administrator&#39;s tools</asp:LinkButton>
+                    <br />
+                    <asp:LinkButton ID="linkProfile" runat="server" OnClick="linkProfile_Click">Edit profile</asp:LinkButton>
+                    <br />
+                    <asp:LinkButton ID="LinkButton7" runat="server" OnClick="LinkButton7_Click">Orders history</asp:LinkButton>
+                    <br />
+                    <asp:LinkButton ID="linckOut" runat="server" OnClick="LinkButton8_Click">CheckOut</asp:LinkButton>
+                    <br />
+                    <br />
+                </div>
+            
+                <div class="main">
+                <asp:ContentPlaceHolder ID="contentBody" runat="server">
+                </asp:ContentPlaceHolder>
+                 </div>
+
+                 <div class="sidebarRight">
+                 <asp:ContentPlaceHolder ID="ContentPlaceHolderRight" runat="server">
+                </asp:ContentPlaceHolder>
+                     <br />
+&nbsp;<br />
+&nbsp;<asp:AdRotator ID="AdRotator1"  KeywordFilter="Japan" runat="server" DataSourceID="XmlDataSource1" />
+                     <asp:XmlDataSource ID="XmlDataSource1" runat="server"  OnTransforming="XmlDataSource1_Transforming" DataFile="~/Sample1.ads"></asp:XmlDataSource>
+                     <br />
+&nbsp;<asp:AdRotator ID="AdRotator2" KeywordFilter="HKR" runat="server" DataSourceID="XmlDataSource2" />
+                     <asp:XmlDataSource ID="XmlDataSource2" runat="server" OnTransforming="XmlDataSource2_Transforming" DataFile="~/Sample1.ads"></asp:XmlDataSource>
+                     <br />
+&nbsp;<asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">LinkButton</asp:LinkButton>
+                     <br />
+                     <asp:Image ID="imageBook" runat="server" Height="60px" Width="63px" />
+            </div>
+             
+            <div class="footer">
+                Old shelf
+                Kristianstad Storagatan 13b
+                book@gmail.com
+               
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>

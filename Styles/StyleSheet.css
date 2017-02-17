@@ -1,0 +1,73 @@
+﻿body, div, dl, dd, dt, p, ul, ol, li, h1, h2, h3, h4, h5, pre, form, fieldset, textarea {
+    padding: 0;
+    margin: 0;
+}
+/*body*/
+body {
+    color: red;
+    font-family: Arial,Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    height: 861px;
+}
+/*Page*/
+.wraper {
+    width: auto;
+    height:auto;
+    padding:0px;
+    margin: auto;
+}
+/*Home page*/
+
+
+.sidebarLeft {
+    width:20%;
+    height:570px;
+    background-color:yellowgreen;
+    float:left;
+    
+}
+.main {
+    width:60%;
+    background:url(old.jpg);
+    height:568px;
+    float:left;
+   
+}
+.sidebarRight {
+    width:20%;
+    height:570px;
+    background-color:olivedrab;
+    float:left;
+    
+}
+/*Menu*/
+.menu {
+    width: 100%;
+    background-color: rgb(10, 110,178);
+    border-radius: 5px,5px,5px,5px;
+    margin: 0px 0px 10px;
+    color: rgb(243,243,243);
+    height: 206px;
+    padding: 0px;
+}
+
+
+
+
+       
+
+.clear {
+    clear: both;
+}
+/*Footer*/
+.footer {
+    height: auto;
+    background-color: rgb(10,110,178);
+    color: rgb(255,255,255);
+    border-radius: 5px 5px 5px 5px;
+}
+.footer h2 {
+   padding: 15px;
+   text-align: center;
+    height: 596px;
+}
