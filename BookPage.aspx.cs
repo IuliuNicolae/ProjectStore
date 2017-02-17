@@ -12,31 +12,18 @@ public partial class BookPage : System.Web.UI.Page
     String queryStr;
     protected void Page_Load(object sender, EventArgs e)
     {
-        /* queryStr = (string)Session["searchQuerry"];
-
-         if (!IsPostBack)
+         queryStr = (String)Session["searchQuerry"];
+        
+        if (!IsPostBack)
          {
-             getData(queryStr);
-         }*/
-        String connString = System.Configuration.ConfigurationManager.ConnectionStrings["WebbAppConnString"].ToString();
-        DataTable dt = new DataTable();
-        using (MySqlConnection cn = new MySqlConnection(connString))
-        {
-
-
-            MySqlDataAdapter adp = new MySqlDataAdapter("select * from movies", cn);
-            adp.Fill(dt);
-            if (dt.Rows.Count > 0)
-            {
-                gvBooks.DataSource = dt;
-                gvBooks.DataBind();
-            }
-        }
+             getData(this.queryStr);
+         }
+       
 
     }
 
 
-    protected void BindData()
+    protected void BindData(String myQuerry)
     {
 
 
@@ -46,7 +33,7 @@ public partial class BookPage : System.Web.UI.Page
         {
 
 
-            MySqlDataAdapter adp = new MySqlDataAdapter("select * from movies", cn);
+            MySqlDataAdapter adp = new MySqlDataAdapter(myQuerry, cn);
             adp.Fill(dt);
             if (dt.Rows.Count > 0)
             {
@@ -68,10 +55,11 @@ public partial class BookPage : System.Web.UI.Page
     {
         string querry = "";
         string pattern = ",";
-        myString = "";
-       String[] words = Regex.Split(myString, pattern);
-
-        //string[] words =(string) myString.split(',');
+       
+        System.Diagnostics.Debug.WriteLine("String" +myString);
+        String[] words = Regex.Split(myString, pattern);
+        System.Diagnostics.Debug.WriteLine("Lenght" + words.Length);
+       // string[] words =(string) myString.split(',');
         if (words.Length == 0)
         {
 
@@ -80,30 +68,11 @@ public partial class BookPage : System.Web.UI.Page
         }
         else if (words.Length == 1)
         {
-            if (words[0].Equals("£science£"))
-            {
-                querry = "select * from movies where category='Science'";
-               
-            }
-            else if (words[0].Equals("£romance£"))
-            {
-                querry = "select * from movies where category='Romance'";
-
-            }
-            else if (words[0].Equals("£children£"))
-            {
-                querry = "select * from movies where category='Children'";
-
-            }
-            else if (words[0].Equals("£thriller£"))
-            {
-                querry = "select * from movies where category='Thriller'";
-
-            }
-            else
-            {
-                querry = "SELECT * FROM movies WHERE (title LIKE'%" + words[0] + "%') OR (artists LIKE '% " + words[0] + "%') ";
-            }
+            
+                querry = "SELECT * FROM movies WHERE (title LIKE'%" + words[0] + "%') OR (artists LIKE '%" + words[0] + "%') ";
+                System.Diagnostics.Debug.WriteLine("SomeText3 " + querry);
+                System.Diagnostics.Debug.WriteLine("SomeText4 " + words[0]);
+            
         }
         else if (words.Length == 2)
         {
@@ -115,7 +84,7 @@ public partial class BookPage : System.Web.UI.Page
         }
 
 
-        BindData();
+        BindData(querry);
     }
 
 
@@ -226,7 +195,7 @@ public partial class BookPage : System.Web.UI.Page
 
             advancedQuerry = "select * from movies where (title like '%" + search + "%' or authorName like '%" + search + "%') and category='" + qSup1 + "' or category ='" + qSup2 + "' or category ='"+qSup3+"'";
         }
-        BindData();
+        BindData(advancedQuerry);
 
     }
     protected void menuCommando(string commando) {
