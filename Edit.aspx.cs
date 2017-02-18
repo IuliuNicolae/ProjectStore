@@ -86,7 +86,7 @@ public partial class Edit : System.Web.UI.Page
             {
             System.Diagnostics.Debug.WriteLine(actualCustomerNew.Email + "      userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr   " + user);
             queryStr = "update  customers set customerName='" + textBoxName.Text + "', customerPass='" + textBoxPass.Text + "', custommerStreet='" + textBoxStreet.Text + "', customerPhone='" + textBoxPhone.Text + "' where customerEmail='" + actualCustomerNew.Email + "'";
-                newCustomer = new Customers(actualCustomerNew.Email,textBoxName.Text,textBoxPass.Text,actualCustomerNew.Pass,textBoxStreet.Text,textBoxPhone.Text);
+                newCustomer = new Customers(actualCustomerNew.Email,textBoxName.Text,textBoxPass.Text,actualCustomerNew.Pass,textBoxStreet.Text,textBoxPhone.Text,"type");
                 Session["myCustomer"] = newCustomer;
                
             }

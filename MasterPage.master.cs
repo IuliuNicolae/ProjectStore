@@ -130,6 +130,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
         pass = textBoxPassword.Text;
         string loginemail ="";
         string loginpass ="";
+        string loginfirstname = "";
+        string loginlastname = "";
+        string loginadress = "";
+        string logintele = "";
+        string logintype = "";
         if (email != " ")
         {
             try
@@ -143,14 +148,19 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     System.Diagnostics.Debug.WriteLine("reads");
                     loginemail = reader.GetString(reader.GetOrdinal("email"));
+                    loginfirstname = reader.GetString(reader.GetOrdinal("firstName"));
+                    loginlastname = reader.GetString(reader.GetOrdinal("lastName"));
                     loginpass = reader.GetString(reader.GetOrdinal("password"));
+                    loginadress = reader.GetString(reader.GetOrdinal("address"));
+                    logintele = reader.GetString(reader.GetOrdinal("phone"));
+                    logintype = reader.GetString(reader.GetOrdinal("type"));
                     System.Diagnostics.Debug.WriteLine(loginemail);
                 }
                 dbc.close();
                 if (loginemail.Equals(email) && loginpass.Equals(pass))
                 {
                     
-                    Customers myCustomer = new Customers("Johan", "Nilsson", loginemail, loginpass, "gatan1", "01010101");
+                    Customers myCustomer = new Customers(loginfirstname, loginlastname, loginemail, loginpass, loginadress, logintele, logintype);
                     Session["myCustomer"] = myCustomer;
                     labelName.Text = myCustomer.FirstName;
 
@@ -180,44 +190,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     }
     protected void logInAmin()
     {
-        email = textBoxEmail.Text;
-        if (email != " ")
-        {
-            try
-            {
-                dbConnection dbc = dbConnection.Instance();
-                queryStr = "SELECT * from  administrator where administratorEmail= '" + email + "'";
-
-                reader = dbc.Select(queryStr);
-                while (reader.Read())
-                {
-                    id = reader.GetInt32(reader.GetOrdinal("administratorId")) + "";
-                    name = reader.GetString(reader.GetOrdinal("administratorName"));
-                    pass = reader.GetString(reader.GetOrdinal("administratorPass"));
-                }
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                labelName.Text = "Your email is not valid";
-            }
-        }
-        else
-        {
-            labelName.Text = "Are you the administrator?";
-        }
-        if (pass.Equals(textBoxPassword.Text))
-        {
-            labelName.Text = name;
-            Administrator myAdministrator = new Administrator(id, name, email,pass);
-            Session["myAdministrator"] = myAdministrator;
-
-        }
-        else
-        {
-            labelName.Text = "Invalid pass";
-        }
-
-        checkBoxAdmin.Checked = false;
+       
     }
 
     protected void ddLstBks_SelectedIndexChanged(object sender, EventArgs e)
