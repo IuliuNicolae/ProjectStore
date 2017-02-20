@@ -16,18 +16,15 @@ public class Customers
     string email;
     string adress;
     string phone;
-    string type;
-
     public Customers() {
     }
-    public Customers(string firstName,string lastName,string email,string pass,string adress, string phone, string type) {
+    public Customers(string firstName,string lastName,string email,string pass,string adress, string phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pass = pass;
         this.email = email;
         this.adress = adress;
         this.phone = phone;
-        this.type = type;
 
     }
     public string FirstName
@@ -105,13 +102,6 @@ public class Customers
         set
         {
             phone = value;
-        }
-    }
-    public string Type
-    {
-        get
-        {
-            return type;
         }
     }
 }
